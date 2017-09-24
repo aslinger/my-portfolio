@@ -30,8 +30,3 @@ describe("ExampleWorkModal Component", () =>{
     expect(openComponent.find(".background--skyBlue").hasClass('modal--closed')).toEqual(false);
   });
 });
-
-describe("ExampleWorkModalBubble Component", () =>{
-
-
-});

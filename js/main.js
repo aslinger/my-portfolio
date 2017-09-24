@@ -43,4 +43,4 @@ const myWork = [
 ];
 
 ReactDOM.render(<ExampleWork work={myWork} />, document.getElementById('example-work'));
-ReactDOM.render(<ExampleWorkModal example={myWork} />, document.getElementById('example-work-modal'));
+ReactDOM.render(<ExampleWorkModal example={myWork[0]} />, document.getElementById('example-work-modal'));
