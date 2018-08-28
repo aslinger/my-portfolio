@@ -23,7 +23,7 @@ const myWork = [
     title: "Portfolio",
     href: "http://portfolio.johnaslinger.com",
     desc:
-      "This is a serverless React app hosted on AWS. When commits are pushed to github, CodeBuild deploys the new website to S3 and emails me when the website is updated.",
+      "This is a serverless React single-page app hosted on AWS. When commits are pushed to github, CodeBuild deploys the new website to S3 and emails me when the website is updated.",
     image: {
       desc: "example screenshot of a project involving chemistry",
       src: "images/example2.png",
