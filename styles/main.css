@@ -55,13 +55,18 @@ html {
 }
 
 body {
-  font-family: 'Cardo', serif;
+  font-family: "Cardo", serif;
   margin: 0;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Montserrat', sans-serif;
-  letter-spacing: .1rem;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Montserrat", sans-serif;
+  letter-spacing: 0.1rem;
 }
 
 /*
@@ -76,14 +81,13 @@ h1, h2, h3, h4, h5, h6 {
   overflow: auto;
 }
 
-
 /*
   Sections
 */
 
 .section {
   font-size: 4.2rem;
-  min-height: 70vh;
+  min-height: 30vh;
   position: relative;
   padding-top: 5rem;
   padding-bottom: 5rem;
@@ -136,7 +140,7 @@ h1, h2, h3, h4, h5, h6 {
   height: 34rem;
 }
 
-.section__exampleTitle{
+.section__exampleTitle {
   font-size: 3.4rem;
   text-align: center;
   text-transform: uppercase;
@@ -178,7 +182,6 @@ h1, h2, h3, h4, h5, h6 {
   display: inline-block;
   font-size: 3rem;
 }
-
 
 /*
   Modal
