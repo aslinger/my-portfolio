@@ -148,7 +148,7 @@ h6 {
 }
 
 .section__exampleImage {
-  opacity: 0.1;
+  opacity: 0.25;
   width: 250%;
   margin-left: -50%;
   margin-top: -50%;
@@ -230,5 +230,5 @@ h6 {
 }
 
 .modal__image {
-  opacity: 0.2;
+  opacity: 0.1;
 }
