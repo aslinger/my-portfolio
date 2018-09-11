@@ -3,10 +3,6 @@ import ReactDOM from "react-dom";
 import ExampleWork from "./example-work";
 import ExampleWorkModal from "./example-work-modal";
 
-console.log("Loaded react-dom");
-
-console.log("Loaded webpack");
-
 const myWork = [
   {
     title: "Email Pollster",
