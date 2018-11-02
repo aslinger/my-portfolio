@@ -4,7 +4,8 @@
   "description": "My Portfolio",
   "main": "index.js",
   "dependencies": {
-    "chai": "^4.1.2",
+    "ajv": "^6.5.4",
+    "chai": "^4.2.0",
     "local-web-server": "^2.6.0",
     "react": "^15.6.2",
     "react-dom": "^15.6.2"
