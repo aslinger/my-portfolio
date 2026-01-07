@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import ExampleWorkModal from '../js/example-work-modal';
+import ExampleWorkModal from '../old/js/example-work-modal';
 
 const myExample =
   {

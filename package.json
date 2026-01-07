@@ -1,40 +1,32 @@
 {
   "name": "my-portfolio",
+  "private": true,
   "version": "1.0.0",
-  "description": "My Portfolio",
-  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
+  },
   "dependencies": {
-    "ajv": "^6.5.4",
-    "chai": "^4.2.0",
-    "local-web-server": "^2.6.0",
-    "react": "^15.6.2",
-    "react-dom": "^15.6.2"
+    "lucide-react": "^0.562.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-jest": "^21.2.0",
-    "babel-loader": "^7.1.5",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1",
-    "enzyme": "^2.9.1",
-    "jest": "^21.2.1",
-    "react-test-renderer": "^15.6.2",
-    "webpack": "^3.12.0"
-  },
-  "scripts": {
-    "test": "jest",
-    "test-watch": "jest --watch",
-    "webpack": "webpack",
-    "webpack-watch": "webpack --watch"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/aslinger/my-portfolio.git"
-  },
-  "author": "John Aslinger",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/aslinger/my-portfolio/issues"
-  },
-  "homepage": "https://github.com/aslinger/my-portfolio#readme"
+    "@types/react": "^18.2.43",
+    "@types/react-dom": "^18.2.17",
+    "@typescript-eslint/eslint-plugin": "^6.14.0",
+    "@typescript-eslint/parser": "^6.14.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.16",
+    "eslint": "^8.55.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.5",
+    "postcss": "^8.4.32",
+    "tailwindcss": "^3.4.0",
+    "typescript": "^5.2.2",
+    "vite": "^5.0.8"
+  }
 }

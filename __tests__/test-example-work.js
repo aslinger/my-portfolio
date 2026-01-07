@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import ExampleWork, {ExampleWorkBubble} from '../js/example-work';
+import ExampleWork, {ExampleWorkBubble} from '../old/js/example-work';
 
 const myWork = [
   {
