@@ -78,7 +78,7 @@ function App() {
     // --- HANDLER: SUBMIT FORM ---
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const API_URL = "https://your-api-id.execute-api.us-east-1.amazonaws.com/contact";
+        const API_URL = "https://m6qckep1e7.execute-api.us-east-1.amazonaws.com/contact";
 
         try {
             const response = await fetch(API_URL, {
