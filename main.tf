@@ -2,47 +2,49 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# --- VARIABLES (Update these!) ---
 variable "domain_name" {
-  default = "johnaslinger.com" # Replace or ignore if not using custom domain yet
+  default = "johnaslinger.com"
   type    = string
 }
 
 variable "bucket_name" {
-  default = "my-portfolio-site-aslinger" # Must be unique globally
+  default = "my-portfolio-site-aslinger"
   type    = string
 }
 
 variable "my_email" {
-  default = "mr.aslinger@gmail.com" # Replace with your real email for the contact form
+  default = "mr.aslinger@gmail.com"
   type    = string
 }
 
-# ==============================================================================
-# 1. WEBSITE INFRASTRUCTURE (S3 & CloudFront)
-# ==============================================================================
-
+variable "github_repo" {
+  description = "The repo path for OIDC (e.g., aslinger/my-portfolio)"
+  default     = "aslinger/my-portfolio"
+  type        = string
+}
 resource "aws_s3_bucket" "website_bucket" {
   bucket = var.bucket_name
 }
 
-resource "aws_cloudfront_origin_access_control" "oac" {
+resource "aws_cloudfront_origin_access_control" "default" {
   name                              = "s3-portfolio-oac"
+  description                       = "Grant CloudFront access to S3"
   origin_access_control_origin_type = "s3"
   signing_behavior                  = "always"
   signing_protocol                  = "sigv4"
 }
 
 resource "aws_cloudfront_distribution" "s3_distribution" {
-  origin {
-    domain_name              = aws_s3_bucket.website_bucket.bucket_regional_domain_name
-    origin_id                = "S3Origin"
-    origin_access_control_id = aws_cloudfront_origin_access_control.oac.id
-  }
-
   enabled             = true
   is_ipv6_enabled     = true
   default_root_object = "index.html"
+  aliases             = [var.domain_name, "www.${var.domain_name}"]
+
+  origin {
+    domain_name              = aws_s3_bucket.website_bucket.bucket_regional_domain_name
+    origin_id                = "S3Origin"
+    origin_access_control_id = aws_cloudfront_origin_access_control.default.id
+  }
 
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD"]
@@ -55,6 +57,9 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     }
 
     viewer_protocol_policy = "redirect-to-https"
+    min_ttl                = 0
+    default_ttl            = 3600
+    max_ttl                = 86400
   }
 
   restrictions {
@@ -62,10 +67,9 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   }
 
   viewer_certificate {
-    cloudfront_default_certificate = true
-    # If using a custom domain with ACM, uncomment below:
-    # acm_certificate_arn = aws_acm_certificate.cert.arn
-    # ssl_support_method  = "sni-only"
+    acm_certificate_arn      = aws_acm_certificate_validation.cert.certificate_arn
+    ssl_support_method       = "sni-only"
+    minimum_protocol_version = "TLSv1.2_2021"
   }
 
   custom_error_response {
@@ -74,7 +78,6 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     response_code         = 200
     response_page_path    = "/index.html"
   }
-
   custom_error_response {
     error_caching_min_ttl = 0
     error_code            = 404
@@ -83,7 +86,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   }
 }
 
-# S3 Bucket Policy to allow CloudFront to read files
+# S3 Bucket Policy
 resource "aws_s3_bucket_policy" "allow_cloudfront" {
   bucket = aws_s3_bucket.website_bucket.id
   policy = jsonencode({
@@ -101,14 +104,70 @@ resource "aws_s3_bucket_policy" "allow_cloudfront" {
   })
 }
 
-# ==============================================================================
-# 2. GITHUB ACTIONS DEPLOYMENT PERMISSIONS
-# ==============================================================================
+resource "aws_acm_certificate" "cert" {
+  domain_name       = var.domain_name
+  subject_alternative_names = ["www.${var.domain_name}"]
+  validation_method = "DNS"
+
+  lifecycle { create_before_destroy = true }
+}
+
+data "aws_route53_zone" "main" {
+  name         = var.domain_name
+  private_zone = false
+}
+
+resource "aws_route53_record" "cert_validation" {
+  for_each = {
+    for dvo in aws_acm_certificate.cert.domain_validation_options : dvo.domain_name => dvo
+  }
+  allow_overwrite = true
+  name            = each.value.resource_record_name
+  records         = [each.value.resource_record_value]
+  ttl             = 60
+  type            = each.value.resource_record_type
+  zone_id         = data.aws_route53_zone.main.zone_id
+}
+
+resource "aws_acm_certificate_validation" "cert" {
+  certificate_arn         = aws_acm_certificate.cert.arn
+  validation_record_fqdns = [for record in aws_route53_record.cert_validation : record.fqdn]
+}
+
+# DNS Record: Root Domain (A Record Alias)
+resource "aws_route53_record" "root" {
+  zone_id = data.aws_route53_zone.main.zone_id
+  name    = var.domain_name
+  type    = "A"
+
+  alias {
+    name                   = aws_cloudfront_distribution.s3_distribution.domain_name
+    zone_id                = aws_cloudfront_distribution.s3_distribution.hosted_zone_id
+    evaluate_target_health = false
+  }
+}
+
+# DNS Record: WWW Subdomain (A Record Alias)
+resource "aws_route53_record" "www" {
+  zone_id = data.aws_route53_zone.main.zone_id
+  name    = "www.${var.domain_name}"
+  type    = "A"
+
+  alias {
+    name                   = aws_cloudfront_distribution.s3_distribution.domain_name
+    zone_id                = aws_cloudfront_distribution.s3_distribution.hosted_zone_id
+    evaluate_target_health = false
+  }
+}
+
+data "tls_certificate" "github" {
+  url = "https://token.actions.githubusercontent.com"
+}
 
 resource "aws_iam_openid_connect_provider" "github" {
   url             = "https://token.actions.githubusercontent.com"
   client_id_list  = ["sts.amazonaws.com"]
-  thumbprint_list = ["6938fd4d98bab03faadb97b34396831e3780aea1"]
+  thumbprint_list = [data.tls_certificate.github.certificates[0].sha1_fingerprint]
 }
 
 resource "aws_iam_role" "github_deploy_role" {
@@ -120,7 +179,7 @@ resource "aws_iam_role" "github_deploy_role" {
       Effect = "Allow"
       Principal = { Federated = aws_iam_openid_connect_provider.github.arn }
       Condition = {
-        StringLike = { "token.actions.githubusercontent.com:sub" = "repo:aslinger/my-portfolio:*" }
+        StringLike = { "token.actions.githubusercontent.com:sub" = "repo:${var.github_repo}:*" }
       }
     }]
   })
@@ -132,7 +191,7 @@ resource "aws_iam_role_policy" "deploy_policy" {
     Version = "2012-10-17"
     Statement = [
       {
-        Action   = ["s3:PutObject", "s3:ListBucket", "s3:DeleteObject"]
+        Action   = ["s3:PutObject", "s3:ListBucket", "s3:DeleteObject", "s3:GetBucketLocation"]
         Effect   = "Allow"
         Resource = [aws_s3_bucket.website_bucket.arn, "${aws_s3_bucket.website_bucket.arn}/*"]
       },
@@ -145,15 +204,10 @@ resource "aws_iam_role_policy" "deploy_policy" {
   })
 }
 
-# ==============================================================================
-# 3. SERVERLESS BACKEND (Contact Form)
-# ==============================================================================
-
 resource "aws_ses_email_identity" "my_email" {
   email = var.my_email
 }
 
-# Prepare the Lambda Code (Zip)
 data "archive_file" "lambda_zip" {
   type        = "zip"
   source_file = "${path.module}/lambda/index.mjs"
@@ -167,6 +221,7 @@ resource "aws_lambda_function" "contact_form" {
   handler          = "index.handler"
   source_code_hash = data.archive_file.lambda_zip.output_base64sha256
   runtime          = "nodejs20.x"
+  timeout          = 10
 
   environment {
     variables = {
@@ -188,7 +243,7 @@ resource "aws_iam_role_policy" "lambda_ses_policy" {
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
-      { Action = ["ses:SendEmail"], Effect = "Allow", Resource = "*" },
+      { Action = ["ses:SendEmail", "ses:SendRawEmail"], Effect = "Allow", Resource = "*" },
       { Action = ["logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents"], Effect = "Allow", Resource = "arn:aws:logs:*:*:*" }
     ]
   })
@@ -199,7 +254,7 @@ resource "aws_apigatewayv2_api" "api" {
   name          = "portfolio_api"
   protocol_type = "HTTP"
   cors_configuration {
-    allow_origins = ["*"]
+    allow_origins = ["https://${var.domain_name}", "https://www.${var.domain_name}", "http://localhost:5173"] # Added localhost for testing
     allow_methods = ["POST"]
     allow_headers = ["content-type"]
   }
@@ -215,6 +270,7 @@ resource "aws_apigatewayv2_integration" "lambda_int" {
   api_id           = aws_apigatewayv2_api.api.id
   integration_type = "AWS_PROXY"
   integration_uri  = aws_lambda_function.contact_form.invoke_arn
+  payload_format_version = "2.0"
 }
 
 resource "aws_apigatewayv2_route" "post_contact" {
@@ -240,5 +296,9 @@ output "cloudfront_distribution_id" {
 }
 
 output "s3_bucket_name" {
-  value = aws_s3_bucket.website_bucket.id
+  value = aws_s3_bucket.website_bucket.bucket
+}
+
+output "github_role_arn" {
+  value = aws_iam_role.github_deploy_role.arn
 }
