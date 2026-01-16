@@ -45,16 +45,13 @@ interface Repository {
 }
 
 function App() {
-    // --- STATE ---
     const [projects, setProjects] = useState<Repository[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
-    // Contact Form State
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
     const [sent, setSent] = useState(false);
 
-    // --- EFFECT: FETCH GITHUB DATA ---
     useEffect(() => {
         fetch(`https://api.github.com/users/${CONFIG.githubUsername}/repos?sort=updated&per_page=10`)
             .then((res) => res.json())
@@ -83,7 +80,6 @@ function App() {
             .catch((err) => console.error("Error fetching repos:", err));
     }, []);
 
-    // --- HANDLER: SUBMIT FORM ---
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const API_URL = "https://m6qckep1e7.execute-api.us-east-1.amazonaws.com/contact";
