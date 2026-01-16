@@ -10,16 +10,24 @@ const CONFIG = {
     emailUrl: "mailto:mr.aslinger@gmail.com"
 };
 
-const CASE_STUDIES: Record<string, { title?: string, impact: string, tech: string[] }> = {
+const CASE_STUDIES: Record<string, { title?: string, impactPoints: string[], tech: string[] }> = {
     "https://github.com/aslinger/transaction-analyzer": {
         title: "High-Throughput Transaction Analyzer",
-        impact: "This system ingests high-velocity financial transactions, processes them using Virtual Threads for concurrency, and applies a multi-layered fraud detection strategy: Stateful Layer (Redis), ML Layer (ONNX), and Operational API",
+        impactPoints: [
+            "Ingests high-velocity financial transactions using **Java 21 Virtual Threads** for maximum concurrency.",
+            "Implemented a multi-layered fraud strategy: **Redis** (Stateful), **ONNX** (ML), and Operational APIs.",
+            "Architected for **99.9% availability** using a distributed event-driven approach."
+        ],
         tech: ["Java 21", "Spring Boot", "ONNX AI", "Docker"]
     },
     "https://github.com/aslinger/ecommerce": {
-        title: "Polyglot Ecommerce Platform",
-        impact: "This system demonstrates the Transactional Outbox Pattern (simulated) and Distributed Tracing across language boundaries.",
-        tech: ["Java", "Python", "SQS", "OpenTelemetry", "TerraForm"]
+        title: "Polyglot Ecommerce Architecture",
+        impactPoints: [
+            "Demonstrated the **Transactional Outbox Pattern** to ensure eventual consistency between SQL and **AWS SQS**.",
+            "Implemented end-to-end **Distributed Tracing** across microservices using **OpenTelemetry**.",
+            "Engineered **Terraform**-managed infrastructure supporting automated failover and minimal-cost scaling."
+        ],
+        tech: ["Java", "Python", "SQS", "OpenTelemetry", "Terraform"]
     }
 };
 
@@ -31,7 +39,7 @@ interface Repository {
     stargazers_count: number;
     language: string | null;
     isFeatured?: boolean;
-    impact?: string;
+    impactPoints?: string[]; // Change from impact: string
     customTech?: string[];
     customTitle?: string;
 }
@@ -58,7 +66,7 @@ function App() {
                             return {
                                 ...repo,
                                 isFeatured: true,
-                                impact: caseStudy.impact,
+                                impactPoints: caseStudy.impactPoints,
                                 customTech: caseStudy.tech,
                                 customTitle: caseStudy.title
                             };
@@ -163,11 +171,20 @@ function App() {
                                     <div className="mb-6 bg-green-50 border border-green-100 p-4 rounded-lg">
                                         <div className="flex items-start gap-2">
                                             <CheckCircle size={16} className="text-green-600 mt-1 shrink-0" />
-                                            <div>
-                                                <span className="text-xs font-bold text-green-800 uppercase tracking-wide block mb-1">Engineering Impact</span>
-                                                <p className="text-sm text-green-900 font-medium leading-snug">
-                                                    {repo.impact}
-                                                </p>
+                                            <div className="w-full">
+                <span className="text-xs font-bold text-green-800 uppercase tracking-wide block mb-2">
+                    Engineering Impact
+                </span>
+                                                <ul className="space-y-2">
+                                                    {repo.impactPoints?.map((point, index) => (
+                                                        <li key={index} className="text-sm text-green-900 leading-snug flex gap-2">
+                                                            <span className="text-green-400">•</span>
+                                                            <span dangerouslySetInnerHTML={{
+                                                                __html: point.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')
+                                                            }} />
+                                                        </li>
+                                                    ))}
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
