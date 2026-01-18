@@ -8,7 +8,7 @@ export const handler = async (event) => {
         const verifiedEmail = process.env.VERIFIED_EMAIL;
 
         const command = new SendEmailCommand({
-            Source: verifiedEmail, // Must be verified in Sandbox
+            Source: verifiedEmail,
             Destination: { ToAddresses: [verifiedEmail] },
             ReplyToAddresses: [email],
             Message: {
