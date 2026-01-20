@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 const CONFIG = {
     name: "John Aslinger",
     title: "Staff Software Engineer",
-    bio: "Specializing in high-scale distributed systems, minimal-cost cloud architectures, and developer productivity tools.",
+    bio: "Building at the intersection of performance and reliability. I specialize in architecting distributed systems that remain resilient under high-velocity loads while maintaining a philosophy of 'infrastructure-as-code' and minimal-cost serverless patterns. Beyond the code, I focus on building the developer tools and CI/CD pipelines that empower teams to ship safely at scale.",
     githubUsername: "aslinger",
     linkedinUrl: "https://linkedin.com/in/yourprofile",
     emailUrl: "mailto:mr.aslinger@gmail.com",
@@ -54,10 +54,12 @@ export default function App() {
         email: '',
         company: '',
         reason: 'Opportunity',
-        message: ''
+        message: '',
+        hp_field: '' // Honeypot field for bot protection
     });
     const [sent, setSent] = useState(false);
     const [selectedProject, setSelectedProject] = useState<Repository | null>(null);
+    const [isSending, setIsSending] = useState(false);
 
     useEffect(() => {
         fetch(`https://api.github.com/users/${CONFIG.githubUsername}/repos?sort=updated&per_page=10`)
@@ -87,6 +89,11 @@ export default function App() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        // Bot check
+        if (formData.hp_field) return;
+
+        setIsSending(true);
         try {
             const response = await fetch(CONFIG.apiUrl, {
                 method: 'POST',
@@ -96,13 +103,15 @@ export default function App() {
 
             if (response.ok) {
                 setSent(true);
-                setFormData({ name: '', email: '', company: '', reason: 'Opportunity', message: '' });
+                setFormData({ name: '', email: '', company: '', reason: 'Opportunity', message: '', hp_field: '' });
             } else {
                 alert("Failed to send message.");
             }
         } catch (err) {
             console.error(err);
             alert("Error connecting to server.");
+        } finally {
+            setIsSending(false);
         }
     };
 
@@ -118,6 +127,18 @@ export default function App() {
                         <a href={`https://github.com/${CONFIG.githubUsername}`} className="p-2 bg-slate-800 rounded-lg hover:bg-slate-700 transition"><Github /></a>
                         <a href={CONFIG.linkedinUrl} className="p-2 bg-blue-700 rounded-lg hover:bg-blue-600 transition"><Linkedin /></a>
                         <a href={CONFIG.emailUrl} className="p-2 bg-slate-800 rounded-lg hover:bg-slate-700 transition"><Mail /></a>
+                    </div>
+
+                    {/* System Status Badges */}
+                    <div className="flex flex-wrap gap-3 mt-8">
+                        <div className="flex items-center gap-2 px-3 py-1 bg-slate-800/50 rounded-full border border-slate-700">
+                            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                            <span className="text-xs font-mono text-slate-300">System Live: AWS us-east-1</span>
+                        </div>
+                        <div className="flex items-center gap-2 px-3 py-1 bg-slate-800/50 rounded-full border border-slate-700">
+                            <Terminal size={12} className="text-blue-400" />
+                            <span className="text-xs font-mono text-slate-300">CI/CD: GitHub Actions (OIDC)</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -171,7 +192,7 @@ export default function App() {
                                     <>
                                         <button
                                             onClick={() => setSelectedProject(repo)}
-                                            className="mb-4 text-xs font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1 uppercase tracking-tight"
+                                            className="mb-4 text-xs font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1 uppercase tracking-tight w-fit"
                                         >
                                             <Terminal size={14} /> View System Architecture
                                         </button>
@@ -219,6 +240,15 @@ export default function App() {
                         </motion.div>
                     ) : (
                         <form onSubmit={handleSubmit} className="space-y-4">
+                            {/* Honeypot hidden field */}
+                            <input
+                                type="text"
+                                style={{ display: 'none' }}
+                                tabIndex={-1}
+                                autoComplete="off"
+                                value={formData.hp_field}
+                                onChange={(e) => setFormData({...formData, hp_field: e.target.value})}
+                            />
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <label className="block text-sm font-medium text-slate-700 mb-1">Full Name</label>
@@ -246,7 +276,13 @@ export default function App() {
                                 <label className="block text-sm font-medium text-slate-700 mb-1">Message</label>
                                 <textarea value={formData.message} onChange={(e) => setFormData({...formData, message: e.target.value})} className="w-full p-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none h-32" required />
                             </div>
-                            <button type="submit" className="w-full py-3 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition shadow-lg">Send Inquiry</button>
+                            <button
+                                type="submit"
+                                disabled={isSending}
+                                className="w-full py-3 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 disabled:bg-slate-400 transition"
+                            >
+                                {isSending ? "Sending Inquiry..." : "Send Inquiry"}
+                            </button>
                         </form>
                     )}
                 </div>
