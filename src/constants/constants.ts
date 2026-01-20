@@ -18,4 +18,13 @@ export const CASE_STUDIES: Record<string, { title?: string, impactPoints: string
         ],
         tech: ["Java 21", "Spring Boot", "ONNX AI", "Docker"]
     },
+    "https://github.com/aslinger/ecommerce": {
+        title: "Polyglot Ecommerce Architecture",
+        impactPoints: [
+            "Demonstrated the **Transactional Outbox Pattern** to ensure eventual consistency between SQL and **AWS SQS**.",
+            "Implemented end-to-end **Distributed Tracing** across microservices using **OpenTelemetry**.",
+            "Engineered **Terraform**-managed infrastructure supporting automated failover and minimal-cost scaling."
+        ],
+        tech: ["Java", "Python", "SQS", "OpenTelemetry", "Terraform"]
+    }
 };
