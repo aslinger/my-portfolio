@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import { Terminal } from 'lucide-react';
 import { AnimatePresence } from 'framer-motion'; // Keep only AnimatePresence for the Modal
 
-// Imports from your new files
 import { Repository } from './types';
 import { CONFIG, CASE_STUDIES } from './constants/constants';
 import { ProjectCard } from './components/ProjectCard';
 import { ContactForm } from './components/ContactForm';
 import { ArchitectureModal } from './components/ArchitectureModal';
+import { SkillsCloud } from './components/SkillsCloud';
 
 export default function App() {
     const [projects, setProjects] = useState<Repository[]>([]);
@@ -48,6 +48,8 @@ export default function App() {
             </div>
 
             <main className="max-w-6xl mx-auto px-6 -mt-16 pb-20">
+                <SkillsCloud />
+
                 <div className="flex items-center gap-3 mb-6 text-white">
                     <Terminal size={24} />
                     <h2 className="text-2xl font-bold">Engineering Work</h2>
