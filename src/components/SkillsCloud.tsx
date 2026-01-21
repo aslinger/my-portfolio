@@ -6,7 +6,7 @@ const SKILLS = [
 
 export const SkillsCloud = () => {
     return (
-        <div className="mt-12 pt-8 border-t border-slate-800 flex flex-wrap gap-x-12 gap-y-6">
+        <div className="mt-12 pt-8 border-t border-slate-800 flex flex-wrap gap-x-16 gap-y-6">
             {SKILLS.map((group) => (
                 <div key={group.category} className="flex flex-col">
           <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-3">

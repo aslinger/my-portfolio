@@ -7,6 +7,7 @@ import { ProjectCard } from './components/ProjectCard';
 import { ContactForm } from './components/ContactForm';
 import { ArchitectureModal } from './components/ArchitectureModal';
 import { SkillsCloud } from './components/SkillsCloud';
+import { Philosophy } from './components/Philosophy';
 
 export default function App() {
     const [projects, setProjects] = useState<Repository[]>([]);
@@ -51,6 +52,8 @@ export default function App() {
             </header>
 
             <main className="max-w-6xl mx-auto px-6 py-20">
+                <Philosophy />
+
                 <div className="flex items-center gap-3 mb-12">
                     <div className="h-8 w-1 bg-blue-600 rounded-full" />
                     <h2 className="text-3xl font-bold text-slate-900 tracking-tight text-left">
