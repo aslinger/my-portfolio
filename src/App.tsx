@@ -47,7 +47,7 @@ export default function App() {
                 </div>
             </div>
 
-            <main className="max-w-6xl mx-auto px-6 -mt-16 pb-20">
+            <main className="max-w-6xl mx-auto px-6 -mt-24 pb-20">
                 <SkillsCloud />
 
                 <div className="flex items-center gap-3 mb-6 text-white">
