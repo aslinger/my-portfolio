@@ -45,11 +45,11 @@ export default function App() {
                         <a href={CONFIG.linkedinUrl} className="p-2 bg-blue-700 rounded-lg hover:bg-blue-600 transition">LinkedIn</a>
                     </div>
                 </div>
+
+                <SkillsCloud />
             </div>
 
             <main className="max-w-6xl mx-auto px-6 -mt-24 pb-20">
-                <SkillsCloud />
-
                 <div className="flex items-center gap-3 mb-6 text-white">
                     <Terminal size={24} />
                     <h2 className="text-2xl font-bold">Engineering Work</h2>
