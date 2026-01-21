@@ -41,13 +41,19 @@ export const ContactForm = () => {
     };
 
     return (
-        <div className="max-w-2xl mx-auto bg-white p-8 rounded-xl border border-slate-200 shadow-sm mt-20">
-            <h2 className="text-2xl font-bold mb-6 text-slate-800">Contact Me</h2>
+        <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="max-w-3xl bg-white p-8 rounded-xl border border-slate-200 shadow-sm mt-20"
+        >
+            <h2 className="text-2xl font-bold mb-6 text-slate-800 text-left">Contact Me</h2>
 
             {sent ? (
-                <motion.div initial={{opacity:0}} animate={{opacity:1}} className="p-4 bg-green-50 text-green-700 rounded-lg">
+                <div className="p-4 bg-green-50 text-green-700 rounded-lg">
                     Thanks! I'll be in touch soon.
-                </motion.div>
+                </div>
             ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <input
@@ -120,6 +126,6 @@ export const ContactForm = () => {
                     </button>
                 </form>
             )}
-        </div>
+        </motion.div>
     );
 };
