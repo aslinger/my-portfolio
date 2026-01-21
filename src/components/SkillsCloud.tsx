@@ -43,7 +43,7 @@ export const SkillsCloud = () => {
                         transition={{ duration: 0.4, ease: "easeInOut" }}
                     >
                         <div className="px-6 pb-8 grid grid-cols-1 md:grid-cols-3 gap-8 border-t border-slate-100 pt-6">
-                            {SKILLS.map((group, groupIdx) => (
+                            {SKILLS.map((group) => (
                                 <div key={group.category}>
                                     <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">
                                         {group.category}
