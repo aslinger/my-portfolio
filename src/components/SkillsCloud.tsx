@@ -1,23 +1,25 @@
 const SKILLS = [
-    { category: "Cloud", items: ["AWS", "Terraform", "Kubernetes"] },
+    { category: "Cloud", items: ["AWS", "Terraform", "K8s"] },
     { category: "Backend", items: ["Java 21", "Node.js", "Redis"] },
-    { category: "Architecture", items: ["Event-Driven", "OIDC", "OpenTelemetry"] }
+    { category: "System", items: ["OIDC", "Event-Driven", "OTel"] }
 ];
 
 export const SkillsCloud = () => {
     return (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10 pt-8 border-t border-slate-700/50">
+        <div className="mt-12 pt-8 border-t border-slate-800 flex flex-wrap gap-x-12 gap-y-6">
             {SKILLS.map((group) => (
-                <div key={group.category}>
-                    <h3 className="text-[10px] font-bold text-blue-400 uppercase tracking-[0.2em] mb-3">
-                        {group.category}
-                    </h3>
-                    <div className="flex flex-wrap gap-2">
+                <div key={group.category} className="flex flex-col">
+          <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-3">
+            {group.category}
+          </span>
+                    <div className="flex gap-3">
                         {group.items.map((skill) => (
                             <span
                                 key={skill}
-                                className="text-sm font-medium text-slate-300 bg-slate-800/40 border border-slate-700 px-2 py-0.5 rounded"
-                            > {skill} </span>
+                                className="text-sm font-medium text-slate-400 whitespace-nowrap"
+                            >
+                {skill}
+              </span>
                         ))}
                     </div>
                 </div>
