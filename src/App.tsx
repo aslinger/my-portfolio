@@ -49,10 +49,10 @@ export default function App() {
                 <SkillsCloud />
             </div>
 
-            <main className="max-w-6xl mx-auto px-6 -mt-24 pb-20">
-                <div className="flex items-center gap-3 mb-6 text-white">
-                    <Terminal size={24} />
-                    <h2 className="text-2xl font-bold">Engineering Work</h2>
+            <main className="max-w-6xl mx-auto px-6 py-16">
+                <div className="flex items-center gap-3 mb-10">
+                    <Terminal size={24} className="text-blue-600" />
+                    <h2 className="text-2xl font-bold text-slate-800">Engineering Work</h2>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-20">
