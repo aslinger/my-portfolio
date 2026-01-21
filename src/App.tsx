@@ -8,6 +8,7 @@ import { ContactForm } from './components/ContactForm';
 import { ArchitectureModal } from './components/ArchitectureModal';
 import { SkillsCloud } from './components/SkillsCloud';
 import { Philosophy } from './components/Philosophy';
+import {SystemStatus} from "./components/SystemStatus.tsx";
 
 export default function App() {
     const [projects, setProjects] = useState<Repository[]>([]);
@@ -74,6 +75,8 @@ export default function App() {
 
                 <ContactForm />
             </main>
+
+            <SystemStatus />
 
             <AnimatePresence>
                 {selectedProject && (
