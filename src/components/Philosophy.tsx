@@ -1,21 +1,21 @@
 import { motion } from 'framer-motion';
-import { Zap, ShieldCheck, Users } from 'lucide-react';
+import { Zap, ShieldCheck, TrendingDown } from 'lucide-react';
 
 const PRINCIPLES = [
     {
-        title: "Scale with Simplicity",
-        description: "I prefer 'boring' proven technology for core path logic. Complexity should be an earned privilege, not a default state.",
-        icon: <Zap className="text-blue-500" size={24} />
-    },
-    {
-        title: "Observability First",
-        description: "If it isn't monitored, it isn't in production. I build systems with deep tracing and metrics baked into the foundation.",
+        title: "Resilience via Self-Healing",
+        description: "Systems must survive 'poison pills'. I implement automated DLQ redrive policies to ensure main-line processing never stops.",
         icon: <ShieldCheck className="text-blue-500" size={24} />
     },
     {
-        title: "People over Processes",
-        description: "Code is written for humans to read, and only incidentally for machines to execute. I prioritize developer experience.",
-        icon: <Users className="text-blue-500" size={24} />
+        title: "Gapless Observability",
+        description: "Metrics are useless if context is lost. I advocate for 100% trace continuity across async boundaries like SQS using OpenTelemetry.",
+        icon: <Zap className="text-blue-500" size={24} />
+    },
+    {
+        title: "FinOps as Engineering",
+        description: "Cost efficiency is an architectural concern. I build tooling (like Go-based CLIs) to shift cost estimation left into the CI/CD pipeline.",
+        icon: <TrendingDown className="text-blue-500" size={24} />
     }
 ];
 

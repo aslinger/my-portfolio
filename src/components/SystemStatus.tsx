@@ -1,4 +1,4 @@
-import { Globe, ShieldCheck, Activity } from 'lucide-react';
+import { Globe, ShieldCheck, Activity, DollarSign } from 'lucide-react';
 
 export const SystemStatus = () => {
     const lastDeploy = new Date().toLocaleDateString('en-US', {
@@ -17,11 +17,15 @@ export const SystemStatus = () => {
                     </div>
                     <div className="flex items-center gap-2 text-slate-500 text-xs font-mono">
                         <ShieldCheck size={14} className="text-green-500" />
-                        <span>Status: Verified OIDC Provider</span>
+                        <span>OIDC: Verified</span>
                     </div>
                     <div className="flex items-center gap-2 text-slate-500 text-xs font-mono">
                         <Activity size={14} className="text-orange-500" />
-                        <span>Environment: Production</span>
+                        <span>Health: Healthy</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-slate-500 text-xs font-mono">
+                        <DollarSign size={14} className="text-purple-500" />
+                        <span>Cost: &lt;$5.00/mo</span>
                     </div>
                 </div>
 
@@ -30,7 +34,7 @@ export const SystemStatus = () => {
                         Build Manifest
                     </p>
                     <p className="text-xs text-slate-500 font-mono">
-                        v1.2.0-stable • Last Sync: {lastDeploy}
+                        {lastDeploy} • main
                     </p>
                 </div>
             </div>
