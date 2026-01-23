@@ -1,20 +1,35 @@
 import { motion } from 'framer-motion';
-import { Zap, ShieldCheck, TrendingDown } from 'lucide-react';
+import { Zap, ShieldCheck, Users, TrendingDown, Activity, Scale } from 'lucide-react';
 
 const PRINCIPLES = [
     {
+        title: "Scale with Simplicity",
+        description: "I prefer 'boring', proven technology for core path logic. Complexity should be an earned privilege, not a default state.",
+        icon: <Scale className="text-blue-500" size={24} />
+    },
+    {
+        title: "People over Processes",
+        description: "Code is written for humans to read, and only incidentally for machines to execute. I prioritize developer experience (DevEx) above all.",
+        icon: <Users className="text-blue-500" size={24} />
+    },
+    {
+        title: "Observability First",
+        description: "If it isn't monitored, it isn't in production. I build systems with deep tracing and metrics baked into the foundation, not bolted on later.",
+        icon: <Activity className="text-blue-500" size={24} />
+    },
+    {
         title: "Resilience via Self-Healing",
-        description: "Systems must survive 'poison pills'. I implement automated DLQ redrive policies to ensure main-line processing never stops.",
+        description: "Systems must survive 'poison pills'. I implement automated DLQ redrive policies and circuit breakers to ensure main-line processing never halts.",
         icon: <ShieldCheck className="text-blue-500" size={24} />
     },
     {
-        title: "Gapless Observability",
-        description: "Metrics are useless if context is lost. I advocate for 100% trace continuity across async boundaries like SQS using OpenTelemetry.",
+        title: "Gapless Tracing",
+        description: "Metrics are useless if context is lost. I advocate for 100% trace continuity across asynchronous boundaries (like SQS/Kafka) using OpenTelemetry.",
         icon: <Zap className="text-blue-500" size={24} />
     },
     {
         title: "FinOps as Engineering",
-        description: "Cost efficiency is an architectural concern. I build tooling (like Go-based CLIs) to shift cost estimation left into the CI/CD pipeline.",
+        description: "Cost efficiency is an architectural concern. I build custom tooling (like s3-tidy) to shift cost estimation left into the CI/CD pipeline.",
         icon: <TrendingDown className="text-blue-500" size={24} />
     }
 ];
@@ -27,7 +42,7 @@ export const Philosophy = () => {
                 <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Engineering Philosophy</h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {PRINCIPLES.map((p, i) => (
                     <motion.div
                         key={p.title}
@@ -35,9 +50,11 @@ export const Philosophy = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: i * 0.1 }}
-                        className="p-6 bg-white border border-slate-200 rounded-xl shadow-sm hover:shadow-md transition-shadow"
+                        className="p-6 bg-white border border-slate-200 rounded-xl shadow-sm hover:shadow-md transition-all hover:border-blue-200 group"
                     >
-                        <div className="mb-4">{p.icon}</div>
+                        <div className="mb-4 p-3 bg-slate-50 rounded-lg w-fit group-hover:bg-blue-50 transition-colors">
+                            {p.icon}
+                        </div>
                         <h3 className="text-lg font-bold text-slate-800 mb-2">{p.title}</h3>
                         <p className="text-slate-600 text-sm leading-relaxed">
                             {p.description}
