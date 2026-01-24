@@ -3,7 +3,7 @@ export const CONFIG = {
     title: "Staff Software Engineer & Cloud Architect",
     bio: "Architect with 15 years of experience designing high-throughput, event-driven enterprise systems. I specialize in Distributed Observability and FinOps, with a track record of driving $40,000/week in cloud optimizations and eliminating visibility gaps in asynchronous architectures.",
     githubUsername: "aslinger",
-    linkedinUrl: "https://linkedin.com/in/yourprofile",
+    linkedinUrl: "www.linkedin.com/in/john-a-40472444",
     emailUrl: "mailto:mr.aslinger@gmail.com",
     apiUrl: "https://m6qckep1e7.execute-api.us-east-1.amazonaws.com/contact"
 };
