@@ -30,11 +30,11 @@ export const CASE_STUDIES: Record<string, { title?: string, impactPoints: string
     "https://github.com/aslinger/SyncStream": {
         title: 'SyncStream: Resilient Event Ingestion Engine',
             impactPoints: [
-            "Designed an asynchronous 'fire-and-forget' ingestion architecture using Amazon SQS, reducing API latency to <50ms while guaranteeing at-least-once delivery.",
-            "Implemented the 'Reliable Worker Pattern' (Process → Persist → Delete) to prevent data loss during worker crashes or database outages.",
-            "Integrated OpenTelemetry for end-to-end distributed tracing, visualizing the complete lifecycle of requests across HTTP, Queue, and Database layers.",
-            "Simulated a cloud-native AWS environment locally using LocalStack and Docker Compose for rapid development and testing without cloud costs."
-        ],
+                "Designed an asynchronous ingestion architecture using **Amazon SQS**, reducing API latency to **<50ms** while guaranteeing **at-least-once delivery**.",
+                "Implemented the **'Reliable Worker Pattern'** (Process → Persist → Delete) to prevent **data loss** during worker crashes or database outages.",
+                "Integrated **OpenTelemetry** for **end-to-end distributed tracing**, visualizing the complete lifecycle of requests across HTTP, Queue, and Database layers.",
+                "Simulated a cloud-native AWS environment locally using **LocalStack** and **Docker Compose** to enable rapid development without cloud costs."
+            ],
             tech: [
             'Python',
             'FastAPI',
