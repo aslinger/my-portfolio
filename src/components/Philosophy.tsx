@@ -28,7 +28,7 @@ const PRINCIPLES = [
         icon: <Zap className="text-blue-500" size={24} />
     },
     {
-        title: "FinOps as Engineering (Project: s3-tidy)",
+        title: "FinOps as Engineering",
         description: "Cost efficiency is an architectural concern. I build custom tooling to shift cost estimation left into the CI/CD pipeline.",
         icon: <TrendingDown className="text-blue-500" size={24} />
     }
