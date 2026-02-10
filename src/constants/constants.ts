@@ -52,5 +52,14 @@ export const CASE_STUDIES: Record<string, { title?: string, impactPoints: string
             "Shifted cost-awareness 'left' in the CI/CD pipeline, enabling proactive governance."
         ],
         tech: ["Go (Golang)", "AWS S3", "FinOps", "CLI"]
+    },
+    "https://github.com/aslinger/chaos-operator": {
+        title: "Chaos Operator: Native Kubernetes Resilience",
+        impactPoints: [
+            "Designed a **Kubernetes Operator** to automate safe failure injection (latency, pod kills) via Custom Resource Definitions (CRDs).",
+            "Implemented **automated safety guardrails** that monitor Prometheus metrics to abort experiments if error rates exceed defined thresholds.",
+            "Reduced **Mean Time to Recovery (MTTR)** by exposing service fragility in staging, shifting resilience testing left."
+        ],
+        tech: ["Kubernetes", "Go (Golang)", "Operator SDK", "Prometheus"]
     }
 };
