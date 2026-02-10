@@ -1,7 +1,7 @@
 const SKILLS = [
-    { category: "Core Languages", items: ["Java 17+", "Go (Golang)", "Python", "SQL/NoSQL"] },
+    { category: "Core Languages", items: ["Java 21+", "Go (Golang)", "Python", "SQL/NoSQL"] },
     { category: "Cloud & Infra", items: ["AWS EKS", "GCP", "Terraform", "LocalStack", "Docker"] },
-    { category: "Observability & Ops", items: ["OpenTelemetry", "Jaeger", "FinOps", "Kafka", "GitHub Actions"] }
+    { category: "Observability & Ops", items: ["OpenTelemetry", "Jaeger", "Snyk", "FinOps", "Kafka", "GitHub Actions"] }
 ];
 
 export const SkillsCloud = () => {
