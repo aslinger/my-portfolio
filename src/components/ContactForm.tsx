@@ -11,12 +11,15 @@ export const ContactForm = () => {
         company: '',
         reason: 'Opportunity',
         message: '',
-        hp_field: ''
+        website: ''
     });
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (formData.hp_field) return;
+        if (formData.website) {
+            setSent(true);
+            return;
+        }
 
         setIsSending(true);
         try {
@@ -28,7 +31,7 @@ export const ContactForm = () => {
 
             if (response.ok) {
                 setSent(true);
-                setFormData({ name: '', email: '', company: '', reason: 'Opportunity', message: '', hp_field: '' });
+                setFormData({ name: '', email: '', company: '', reason: 'Opportunity', message: '', website: '' });
             } else {
                 alert("Failed to send message.");
             }
@@ -56,14 +59,24 @@ export const ContactForm = () => {
                 </div>
             ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
-                    <input
-                        type="text"
-                        style={{ display: 'none' }}
-                        tabIndex={-1}
-                        autoComplete="off"
-                        value={formData.hp_field}
-                        onChange={(e) => setFormData({...formData, hp_field: e.target.value})}
-                    />
+                    
+                    {/* Honeypot Field */}
+                    <div 
+                        style={{ position: 'absolute', left: '-9999px', top: 'auto', width: '1px', height: '1px', overflow: 'hidden' }} 
+                        aria-hidden="true"
+                    >
+                        <label htmlFor="website">Website</label>
+                        <input
+                            type="text"
+                            id="website"
+                            name="website"
+                            tabIndex={-1}
+                            autoComplete="off"
+                            value={formData.website}
+                            onChange={(e) => setFormData({...formData, website: e.target.value})}
+                        />
+                    </div>
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label className="block text-sm font-medium text-slate-700 mb-1">Full Name</label>
