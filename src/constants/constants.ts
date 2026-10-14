@@ -369,3 +369,66 @@ export const CASE_STUDIES: Record<string, { title?: string, impactPoints: string
         tech: ["Kubernetes", "Operator SDK", "Prometheus", "CRDs"]
     }
 };
+
+export const FALLBACK_REPOSITORIES = [
+    {
+        id: 101,
+        name: "transaction-analyzer",
+        customTitle: "High-Throughput Fraud Engine",
+        description: "Real-time transaction anomaly and fraud detection engine built with Java 21 virtual threads, Kafka streaming, and ONNX AI inference.",
+        html_url: "https://github.com/aslinger/transaction-analyzer",
+        stargazers_count: 5,
+        language: "Java",
+        isFeatured: true,
+        impactPoints: CASE_STUDIES["https://github.com/aslinger/transaction-analyzer"].impactPoints,
+        customTech: CASE_STUDIES["https://github.com/aslinger/transaction-analyzer"].tech
+    },
+    {
+        id: 102,
+        name: "ecommerce",
+        customTitle: "High-Throughput Ecommerce Architecture",
+        description: "Distributed ecommerce service mesh on AWS EKS with cross-boundary context propagation ('Trace-Link') and Snyk container security.",
+        html_url: "https://github.com/aslinger/ecommerce",
+        stargazers_count: 4,
+        language: "Java",
+        isFeatured: true,
+        impactPoints: CASE_STUDIES["https://github.com/aslinger/ecommerce"].impactPoints,
+        customTech: CASE_STUDIES["https://github.com/aslinger/ecommerce"].tech
+    },
+    {
+        id: 103,
+        name: "SyncStream",
+        customTitle: "SyncStream: Resilient Event Ingestion",
+        description: "Asynchronous ingestion architecture using Amazon SQS and the Reliable Worker Pattern with full OpenTelemetry distributed tracing.",
+        html_url: "https://github.com/aslinger/SyncStream",
+        stargazers_count: 3,
+        language: "Python",
+        isFeatured: true,
+        impactPoints: CASE_STUDIES["https://github.com/aslinger/SyncStream"].impactPoints,
+        customTech: CASE_STUDIES["https://github.com/aslinger/SyncStream"].tech
+    },
+    {
+        id: 104,
+        name: "s3-tidy",
+        customTitle: "Automated Cloud Governance (FinOps)",
+        description: "High-performance CLI tool enforcing storage retention policies across thousands of AWS S3 buckets with dry-run safety simulation.",
+        html_url: "https://github.com/aslinger/s3-tidy",
+        stargazers_count: 3,
+        language: "CLI",
+        isFeatured: true,
+        impactPoints: CASE_STUDIES["https://github.com/aslinger/s3-tidy"].impactPoints,
+        customTech: CASE_STUDIES["https://github.com/aslinger/s3-tidy"].tech
+    },
+    {
+        id: 105,
+        name: "chaos-operator",
+        customTitle: "Chaos Operator: Native Kubernetes Resilience",
+        description: "Cloud-native Kubernetes Operator automating safe failure injection (latency, pod termination) via CRDs with Prometheus rollback guardrails.",
+        html_url: "https://github.com/aslinger/chaos-operator",
+        stargazers_count: 2,
+        language: "Kubernetes",
+        isFeatured: true,
+        impactPoints: CASE_STUDIES["https://github.com/aslinger/chaos-operator"].impactPoints,
+        customTech: CASE_STUDIES["https://github.com/aslinger/chaos-operator"].tech
+    }
+];

@@ -18,7 +18,9 @@ import {
 } from 'lucide-react';
 
 import { Repository } from './types';
-import { CONFIG, CASE_STUDIES, SUMMARY_PILLARS, FLAGSHIP_PROJECT } from './constants/constants';
+import { CONFIG, CASE_STUDIES, SUMMARY_PILLARS, FLAGSHIP_PROJECT, FALLBACK_REPOSITORIES } from './constants/constants';
+import { Navbar } from './components/Navbar';
+import { FlagshipArchitectureDiagram } from './components/FlagshipArchitectureDiagram';
 import { ProjectCard } from './components/ProjectCard';
 import { ContactForm } from './components/ContactForm';
 import { ArchitectureModal } from './components/ArchitectureModal';
@@ -28,14 +30,18 @@ import { Experience } from './components/Experience';
 import { SystemStatus } from './components/SystemStatus';
 
 export default function App() {
-    const [projects, setProjects] = useState<Repository[]>([]);
+    // Initialize with fallback repositories for instant zero-lag load & rate-limit resilience
+    const [projects, setProjects] = useState<Repository[]>(FALLBACK_REPOSITORIES);
     const [selectedProject, setSelectedProject] = useState<Repository | null>(null);
 
     useEffect(() => {
         fetch(`https://api.github.com/users/${CONFIG.githubUsername}/repos?sort=updated`)
-            .then(res => res.json())
+            .then(res => {
+                if (!res.ok) throw new Error(`GitHub API error: ${res.status}`);
+                return res.json();
+            })
             .then(data => {
-                if (Array.isArray(data)) {
+                if (Array.isArray(data) && data.length > 0) {
                     const enhanced = data.map((repo: any) => ({
                         ...repo,
                         ...(CASE_STUDIES[repo.html_url] && {
@@ -50,7 +56,7 @@ export default function App() {
                 }
             })
             .catch(err => {
-                console.error("Failed to fetch github repositories", err);
+                console.warn("Using offline fallback repositories cache:", err.message);
             });
     }, []);
 
@@ -65,8 +71,11 @@ export default function App() {
 
     return (
         <div className="min-h-screen bg-slate-50 font-sans text-slate-900 selection:bg-blue-600 selection:text-white">
+            {/* --- STICKY NAVBAR --- */}
+            <Navbar />
+
             {/* --- HERO HEADER --- */}
-            <header className="bg-slate-900 text-white pt-20 pb-16 px-6 border-b border-slate-800">
+            <header className="bg-slate-900 text-white pt-28 pb-16 px-6 border-b border-slate-800">
                 <div className="max-w-6xl mx-auto">
                     {/* Top Status & Certification Badge */}
                     <div className="flex items-center gap-3 flex-wrap mb-4">
@@ -155,7 +164,7 @@ export default function App() {
                         {SUMMARY_PILLARS.map((pillar, i) => (
                             <div 
                                 key={i}
-                                className="bg-white rounded-xl p-6 border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden flex flex-col justify-between"
+                                className="bg-white rounded-xl p-6 border border-slate-200/80 shadow-xs hover:shadow-md transition-shadow relative overflow-hidden flex flex-col justify-between"
                             >
                                 <div>
                                     <div className="text-blue-600 font-extrabold text-2xl mb-1 flex items-center gap-2">
@@ -175,7 +184,7 @@ export default function App() {
                 </section>
 
                 {/* --- FLAGSHIP ARCHITECTURE SPOTLIGHT --- */}
-                <section id="flagship" className="mb-24">
+                <section id="flagship" className="mb-24 scroll-mt-20">
                     <div className="flex items-center gap-3 mb-8">
                         <div className="h-8 w-1 bg-blue-600 rounded-full" />
                         <div>
@@ -193,7 +202,7 @@ export default function App() {
                         </div>
                     </div>
 
-                    <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm">
+                    <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-xs">
                         <p className="text-slate-700 text-base leading-relaxed mb-8 max-w-4xl">
                             {FLAGSHIP_PROJECT.description}
                         </p>
@@ -224,8 +233,11 @@ export default function App() {
                             ))}
                         </div>
 
+                        {/* Interactive Topology Diagram */}
+                        <FlagshipArchitectureDiagram />
+
                         {/* Tech Stack Chips */}
-                        <div className="pt-6 border-t border-slate-100 flex flex-wrap items-center gap-2">
+                        <div className="mt-8 pt-6 border-t border-slate-100 flex flex-wrap items-center gap-2">
                             <span className="text-xs font-bold uppercase tracking-wider text-slate-400 mr-2">
                                 Core Technologies:
                             </span>
@@ -242,10 +254,12 @@ export default function App() {
                 <Experience />
 
                 {/* Engineering Philosophy */}
-                <Philosophy />
+                <div id="philosophy" className="scroll-mt-20">
+                    <Philosophy />
+                </div>
 
                 {/* Featured Architectural Case Studies */}
-                <section id="case-studies" className="mb-24">
+                <section id="case-studies" className="mb-24 scroll-mt-20">
                     <div className="flex items-center gap-3 mb-10">
                         <div className="h-8 w-1 bg-blue-600 rounded-full" />
                         <div>
@@ -271,7 +285,7 @@ export default function App() {
                 </section>
 
                 {/* Contact Section */}
-                <section id="contact">
+                <section id="contact" className="scroll-mt-20">
                     <ContactForm />
                 </section>
             </main>
