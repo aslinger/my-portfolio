@@ -33,6 +33,7 @@ export default function App() {
     // Initialize with fallback repositories for instant zero-lag load & rate-limit resilience
     const [projects, setProjects] = useState<Repository[]>(FALLBACK_REPOSITORIES);
     const [selectedProject, setSelectedProject] = useState<Repository | null>(null);
+    const [customModalData, setCustomModalData] = useState<{ title: string; image: string } | null>(null);
 
     useEffect(() => {
         fetch(`https://api.github.com/users/${CONFIG.githubUsername}/repos?sort=updated`)
@@ -233,8 +234,13 @@ export default function App() {
                             ))}
                         </div>
 
-                        {/* Interactive Topology Diagram */}
-                        <FlagshipArchitectureDiagram />
+                        {/* System Architecture Topology Banner */}
+                        <FlagshipArchitectureDiagram 
+                            onViewDiagram={() => setCustomModalData({ 
+                                title: FLAGSHIP_PROJECT.title, 
+                                image: "/diagrams/autonomous-platform.svg" 
+                            })} 
+                        />
 
                         {/* Tech Stack Chips */}
                         <div className="mt-8 pt-6 border-t border-slate-100 flex flex-wrap items-center gap-2">
@@ -295,10 +301,14 @@ export default function App() {
 
             {/* System Architecture Modal */}
             <AnimatePresence>
-                {selectedProject && (
+                {(selectedProject || customModalData) && (
                     <ArchitectureModal
                         project={selectedProject}
-                        onClose={() => setSelectedProject(null)}
+                        customData={customModalData}
+                        onClose={() => {
+                            setSelectedProject(null);
+                            setCustomModalData(null);
+                        }}
                     />
                 )}
             </AnimatePresence>
