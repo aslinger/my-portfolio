@@ -64,9 +64,12 @@ export const ProjectCard = ({ repo, index, onViewArchitecture }: ProjectCardProp
 
         <div className="mt-auto pt-4 border-t border-slate-100 flex items-center justify-between">
             <div className="flex gap-2 flex-wrap">
-                {(repo.customTech || [repo.language]).filter(Boolean).slice(0, 3).map((t) => (
-                    <span key={t} className="text-xs font-semibold px-2 py-1 bg-slate-100 text-slate-600 rounded">{t}</span>
-                ))}
+                {(repo.customTech || [repo.language])
+                    .filter((t): t is string => Boolean(t) && t !== 'Go' && t !== 'Golang')
+                    .slice(0, 3)
+                    .map((t) => (
+                        <span key={t} className="text-xs font-semibold px-2 py-1 bg-slate-100 text-slate-600 rounded">{t}</span>
+                    ))}
             </div>
             <div className="flex items-center gap-1 text-slate-400 text-xs">
                 <Star size={14} className={repo.stargazers_count > 0 ? "text-yellow-400 fill-yellow-400" : ""} />

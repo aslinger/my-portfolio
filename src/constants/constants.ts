@@ -352,11 +352,11 @@ export const CASE_STUDIES: Record<string, { title?: string, impactPoints: string
     "https://github.com/aslinger/s3-tidy": {
         title: "Automated Cloud Governance (FinOps)",
         impactPoints: [
-            "Engineered a high-performance CLI tool in **Go (Golang)** to enforce storage retention policies across thousands of buckets.",
+            "Engineered a high-performance CLI tool to enforce storage retention policies across thousands of enterprise buckets.",
             "Implemented a **'Dry-Run' safety mechanism** to generate compliance reports and visualize impact prior to resource deletion.",
             "Shifted cost-awareness 'left' in the CI/CD pipeline, enabling proactive governance of cloud resources."
         ],
-        tech: ["Go (Golang)", "AWS S3", "FinOps", "CLI"],
+        tech: ["AWS S3", "FinOps", "Cloud Governance", "CLI"],
         architectureImage: "/images/architecture/s3-tidy-workflow.png"
     },
     "https://github.com/aslinger/chaos-operator": {
@@ -366,6 +366,6 @@ export const CASE_STUDIES: Record<string, { title?: string, impactPoints: string
             "Implemented **automated safety guardrails** that monitor Prometheus metrics to abort experiments if error rates exceed defined thresholds.",
             "Reduced **Mean Time to Recovery (MTTR)** by exposing service fragility in staging, shifting resilience testing left."
         ],
-        tech: ["Kubernetes", "Go (Golang)", "Operator SDK", "Prometheus"]
+        tech: ["Kubernetes", "Operator SDK", "Prometheus", "CRDs"]
     }
 };
