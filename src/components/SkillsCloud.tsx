@@ -1,25 +1,22 @@
-const SKILLS = [
-    { category: "Core Languages", items: ["Java 21+", "Go (Golang)", "Python", "SQL/NoSQL"] },
-    { category: "Cloud & Infra", items: ["AWS EKS", "GCP", "Terraform", "LocalStack", "Docker"] },
-    { category: "Observability & Ops", items: ["OpenTelemetry", "Jaeger", "Snyk", "FinOps", "Kafka", "GitHub Actions"] }
-];
+import { TECHNICAL_SKILLS } from '../constants/constants';
 
 export const SkillsCloud = () => {
     return (
-        <div className="mt-12 pt-8 border-t border-slate-800 flex flex-wrap gap-x-16 gap-y-8">
-            {SKILLS.map((group) => (
+        <div className="mt-12 pt-8 border-t border-slate-800 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {TECHNICAL_SKILLS.map((group) => (
                 <div key={group.category} className="flex flex-col">
-          <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-3">
-            {group.category}
-          </span>
-                    <div className="flex gap-3 flex-wrap">
+                    <span className="text-[11px] font-bold text-blue-400 uppercase tracking-wider mb-2.5 flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                        {group.category}
+                    </span>
+                    <div className="flex gap-2 flex-wrap">
                         {group.items.map((skill) => (
                             <span
                                 key={skill}
-                                className="text-sm font-medium text-slate-400 whitespace-nowrap bg-slate-800/50 px-2 py-1 rounded border border-slate-700/50"
+                                className="text-xs font-medium text-slate-300 bg-slate-800/80 px-2.5 py-1 rounded border border-slate-700/60 hover:border-blue-500/50 hover:text-white transition-colors"
                             >
-                {skill}
-              </span>
+                                {skill}
+                            </span>
                         ))}
                     </div>
                 </div>
