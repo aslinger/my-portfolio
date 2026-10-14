@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Briefcase, Calendar, MapPin, GraduationCap, Terminal, Award, ChevronDown, ChevronUp, Layers, CheckCircle2 } from 'lucide-react';
+import { Briefcase, Calendar, MapPin, GraduationCap, Terminal, Award, ChevronDown, ChevronUp, Layers } from 'lucide-react';
 import { PROFESSIONAL_EXPERIENCE, EDUCATION } from '../constants/constants';
+import { MainframeMigrationDiagram } from './MainframeMigrationDiagram';
 
 type FilterCategory = 'all' | 'distributed' | 'java-kafka' | 'python-async' | 'finops-sre' | 'ai';
 
@@ -131,13 +132,13 @@ export const Experience = () => {
 
                                 {/* Deep-Dive Architecture Accordion for Mainframe-to-Microservices */}
                                 {isWalmartTransformation && (
-                                    <div className="mb-6 rounded-lg border border-blue-100 bg-blue-50/50 overflow-hidden">
+                                    <div className="mb-6 rounded-xl border border-blue-200 bg-blue-50/40 overflow-hidden shadow-xs">
                                         <button
                                             onClick={() => setExpandedDeepDive(!expandedDeepDive)}
-                                            className="w-full px-4 py-3 text-left flex items-center justify-between text-xs font-bold text-blue-700 hover:bg-blue-100/50 transition-colors"
+                                            className="w-full px-5 py-3.5 text-left flex items-center justify-between text-xs font-bold text-blue-700 hover:bg-blue-100/50 transition-colors"
                                         >
                                             <span className="flex items-center gap-2">
-                                                <Layers size={15} /> System Design: Dual-Write Zero-Downtime Cutover Architecture (~12M/Day)
+                                                <Layers size={16} /> Interactive System Design: Dual-Write Zero-Downtime Migration (~12M/Day)
                                             </span>
                                             {expandedDeepDive ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                                         </button>
@@ -148,34 +149,9 @@ export const Experience = () => {
                                                     initial={{ height: 0, opacity: 0 }}
                                                     animate={{ height: 'auto', opacity: 1 }}
                                                     exit={{ height: 0, opacity: 0 }}
-                                                    className="px-4 pb-4 pt-1 text-xs text-slate-700 border-t border-blue-100 space-y-2"
+                                                    className="px-5 pb-5 pt-1 text-xs text-slate-700 border-t border-blue-200"
                                                 >
-                                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2">
-                                                        <div className="bg-white p-3 rounded border border-blue-100">
-                                                            <div className="font-bold text-slate-900 mb-1 flex items-center gap-1.5">
-                                                                <CheckCircle2 size={13} className="text-blue-600" /> 1. Dual-Write Ingestion
-                                                            </div>
-                                                            <p className="text-slate-600 text-[11px] leading-relaxed">
-                                                                Synchronous mainframe writes mirrored into Kafka topics, running both pipelines concurrently in production.
-                                                            </p>
-                                                        </div>
-                                                        <div className="bg-white p-3 rounded border border-blue-100">
-                                                            <div className="font-bold text-slate-900 mb-1 flex items-center gap-1.5">
-                                                                <CheckCircle2 size={13} className="text-blue-600" /> 2. Reconciliation Mesh
-                                                            </div>
-                                                            <p className="text-slate-600 text-[11px] leading-relaxed">
-                                                                Automated audit mesh validating 100% financial data integrity and UPC parity across IBM Z-Series and cloud databases.
-                                                            </p>
-                                                        </div>
-                                                        <div className="bg-white p-3 rounded border border-blue-100">
-                                                            <div className="font-bold text-slate-900 mb-1 flex items-center gap-1.5">
-                                                                <CheckCircle2 size={13} className="text-blue-600" /> 3. Canary Traffic Shift
-                                                            </div>
-                                                            <p className="text-slate-600 text-[11px] leading-relaxed">
-                                                                Phased region-by-region cutover (1% → 10% → 100%) with automated rollback gates ensuring zero loss across billions in volume.
-                                                            </p>
-                                                        </div>
-                                                    </div>
+                                                    <MainframeMigrationDiagram />
                                                 </motion.div>
                                             )}
                                         </AnimatePresence>
