@@ -57,7 +57,7 @@ export const TECHNICAL_SKILLS = [
     },
     {
         category: "AI & Vector Search",
-        items: ["Google Gemini API (gemini-3.8-flash)", "NumPy Vector Embeddings", "Cosine Similarity Search", "GPT-4o", "RAG pipelines", "pgvector", "LangChain"]
+        items: ["Google Gemini API", "NumPy Vector Embeddings", "Cosine Distance Retrieval", "GitHub Copilot", "Prompt Engineering"]
     }
 ];
 
@@ -86,7 +86,7 @@ export const FLAGSHIP_PROJECT = {
         },
         {
             heading: "Vector Similarity Search & Gemini AI Synthesis",
-            detail: "Built a high-performance mathematical regime embedding engine using NumPy (cosine distance) paired with Google Gemini API (gemini-3.8-flash) for automated end-of-session incident diagnostics."
+            detail: "Built a high-performance mathematical regime embedding engine using NumPy (cosine distance) paired with Google Gemini API for automated end-of-session incident diagnostics."
         },
         {
             heading: "Infrastructure as Code & Daemon Supervision",
@@ -139,7 +139,7 @@ export const PROFESSIONAL_EXPERIENCE: ExperienceItem[] = [
             },
             {
                 title: "GenAI Telemetry & Risk Attribution",
-                description: "Integrated the Google Gemini API (gemini-3.8-flash) to generate automated end-of-session telemetry synthesis, structuring prompt chains to parse execution logs and volatility regimes into executive risk diagnostics."
+                description: "Integrated the Google Gemini API to generate automated end-of-session telemetry synthesis, structuring prompt chains to parse execution logs and volatility regimes into executive risk diagnostics."
             },
             {
                 title: "Infrastructure as Code (IaC) & Cloud Automation",
@@ -149,7 +149,7 @@ export const PROFESSIONAL_EXPERIENCE: ExperienceItem[] = [
         environment: [
             "Python (asyncio, NumPy)",
             "Prometheus Telemetry",
-            "Google Gemini API (gemini-3.8-flash)",
+            "Google Gemini API",
             "Vector Embeddings (Cosine Similarity)",
             "React",
             "AWS (Lightsail, SSM Parameter Store)",
